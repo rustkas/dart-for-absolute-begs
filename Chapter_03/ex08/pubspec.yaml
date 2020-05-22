@@ -1,0 +1,13 @@
+name: ex08
+description: Equivalency Operators in Dart, Ordered by Precedence
+# version: 1.0.0
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=2.8.1 <3.0.0'
+
+#dependencies:
+#  path: ^1.7.0
+
+dev_dependencies:
+  pedantic: ^1.8.0
