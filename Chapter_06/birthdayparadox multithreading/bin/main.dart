@@ -1,21 +1,43 @@
+import 'dart:isolate';
 import 'dart:math';
 
-void main() {
+Future<void> main() async {
   const iterations = 100000;
-  List<DateTime> birthdays;
-  var matches = 0;
 
-  for (var i = 0; i < iterations; i++) {
-    birthdays = generateBirthdays(); // new list of birthdays each iteration
-    if (containsDuplicates(birthdays)) {
-      matches++;
+  final receivePort = ReceivePort();
+
+  await Isolate.spawn(calculation, receivePort.sendPort);
+
+  receivePort.listen((results) async {
+    if (results is SendPort) {
+      results.send(iterations);
+    } else if (results is Map) {
+      var matches = results['matches'];
+
+      print(
+          'There were at least two people with the same birthday ${format((matches / iterations) * 100)}% of the time.');
+      receivePort.close();
     }
-  }
-
-  print(
-      'There were at least two people with the same birthday ${format((matches / iterations) * 100)}% of the time.');
+  });
 }
 
+void calculation(SendPort sendPort) {
+  final receivePort = ReceivePort();
+  sendPort.send(receivePort.sendPort);
+
+  receivePort.listen((iterations) {
+    List<DateTime> birthdays;
+    var matches = 0;
+
+    for (var i = 0; i < iterations; i++) {
+      birthdays = generateBirthdays(); // new list of birthdays each iteration
+      if (containsDuplicates(birthdays)) {
+        matches++;
+      }
+    }
+    sendPort.send({'matches': matches});
+  });
+}
 
 /// Returns a List with 23 randomly
 /// generated birthdays in it

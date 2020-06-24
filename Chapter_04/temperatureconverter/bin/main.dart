@@ -8,7 +8,7 @@ void main() {
     selection = stdin.readLineSync().toUpperCase(); //get uppercase input
   } while (selection != 'A' && selection != 'B'); //think of && like AND
 
-  print('Enter the starting temperature:');
+  stdout.write('Enter the starting temperature: ');
   var inTemp = stdin.readLineSync();
   var temp = int.parse(inTemp);
 

@@ -52,7 +52,7 @@ void populateGrid(List<String> words, int width, int height) {
   var searchWords = <SearchWord>[];
   var domains = <SearchWord, List<List<Point>>>{};
   var sumOfWordLengths = 0;
-  for (String word in words) {
+  for (var word in words) {
     var sw = SearchWord(word.trim());
     searchWords.add(sw);
     var tempDomain = sw.getDomain(width, height);

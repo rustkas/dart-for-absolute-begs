@@ -12,8 +12,9 @@ void main() {
     negate *= -1.0;
   }
   
-  final current_pi = 4 * series;
-  print('We calculated pi as $pi');
+  final calculated_pi = 4 * series;
+  print('We calculated pi as $calculated_pi');
   print('The real pi is $pi');
-  print('We were off by ${(pi - current_pi).abs()}');
+  print('We were off by ${(pi - calculated_pi).abs()}');
 }
+// dart bin/main.dart

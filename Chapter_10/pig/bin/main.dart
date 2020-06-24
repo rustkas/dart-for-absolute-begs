@@ -65,7 +65,7 @@ void createPlayers() {
   // create the Player objects responsible for tracking
   for (var i = 1; i <= numPlayers; i++) {
     print('What is Player $i\'s name?');
-    var name = stdin.readLineSync();
+    final name = stdin.readLineSync();
     var player = Player(name);
     players.add(player);
   }

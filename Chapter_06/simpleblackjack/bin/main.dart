@@ -17,44 +17,54 @@ void main() {
   while (true) {
     // player decision loop
     print('Do you want to (H)it, (S)tay, or (Q)uit?');
-    var selection = stdin.readLineSync().toUpperCase(); // get uppercase input
 
-    if (selection == 'H') {
-      // hit
-      playerCards.add(deck.removeLast());
+    try {
+      var selection = stdin.readLineSync().toUpperCase(); // get uppercase input
+
+      switch (selection) {
+        case 'H':
+          // hit
+          playerCards.add(deck.removeLast());
+          printStatus(playerCards, dealerCards);
+
+          if (calculateScore(playerCards) > 21) {
+            print('You busted!  You lose!');
+            exit(0); // quits the program
+          }
+          break;
+        case 'S':
+          // stay
+          break; // stop offering to hit, leave this loop
+        case 'Q':
+          // quit
+          exit(0); // quits the program
+          break;
+        default:
+          break;
+      }
+
+      print('Dealer draws rest of cards.');
+      while (calculateScore(dealerCards) < 17) {
+        // keep drawing cards till 17
+        dealerCards.add(deck.removeLast());
+      }
       printStatus(playerCards, dealerCards);
 
-      if (calculateScore(playerCards) > 21) {
-        print('You busted!  You lose!');
-        exit(0); // quits the program
+      if (calculateScore(dealerCards) > 21) {
+        // dealer bust
+        print('Dealer busts!  You win!');
+      } else if (calculateScore(dealerCards) > calculateScore(playerCards)) {
+        print('Dealer wins!');
+      } else if (calculateScore(dealerCards) < calculateScore(playerCards)) {
+        print('You win!');
+      } else {
+        // must be a tie by default
+        print('It\'s a tie!');
       }
-    } else if (selection == 'S') {
-      // stay
-      break; // stop offering to hit, leave this loop
-    } else if (selection == 'Q') {
-      // quit
-      exit(0); // quits the program
+    } catch (_) {
+      // try again
     }
-  }
-
-  print('Dealer draws rest of cards.');
-  while (calculateScore(dealerCards) < 17) {
-    // keep drawing cards till 17
-    dealerCards.add(deck.removeLast());
-  }
-  printStatus(playerCards, dealerCards);
-
-  if (calculateScore(dealerCards) > 21) {
-    // dealer bust
-    print('Dealer busts!  You win!');
-  } else if (calculateScore(dealerCards) > calculateScore(playerCards)) {
-    print('Dealer wins!');
-  } else if (calculateScore(dealerCards) < calculateScore(playerCards)) {
-    print('You win!');
-  } else {
-    // must be a tie by default
-    print('It\'s a tie!');
-  }
+  } // while
 }
 
 /// Calculate the score of the [cards] List
@@ -90,9 +100,9 @@ int calculateScore(List cards) {
 /// Print everyone's scores and decks
 void printStatus(playerCards, dealerCards) {
   // print(''); // blank line
-  print('\nPlayer\'s Total is ${calculateScore(playerCards)}:');
+  print("\nPlayer's Total is ${calculateScore(playerCards)}:");
   print(playerCards); // automatically prints contents of List
-  print('Dealer\'s Total is ${calculateScore(dealerCards)}');
+  print("Dealer's Total is ${calculateScore(dealerCards)}");
   print('$dealerCards\n');
   // print(''); // blank line
 }

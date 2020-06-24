@@ -3,7 +3,7 @@ import 'dart:io';
 void main() {
   int n;
 
-  print('What factorial do you want to calculate??');
+  stdout.write('What factorial do you want to calculate? ');
   var inTemp = stdin.readLineSync();
 
   try {
@@ -45,3 +45,5 @@ BigInt factorial2(int n) {
   }
   return total;
 }
+
+// dart bin/main.dart

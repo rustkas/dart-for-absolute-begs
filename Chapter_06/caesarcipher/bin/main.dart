@@ -2,7 +2,7 @@ import 'dart:io';
 
 void main() {
   var secretCode = getROT13Map();
-  print('Enter the text you want to encrypt:');
+  stdout.write('Enter the text you want to encrypt: ');
   var original = stdin.readLineSync();  // user input
   var changed = '';
   for (var character in original.split('')) {  // get list of characters
@@ -12,9 +12,9 @@ void main() {
       changed += character;
     }
   }
-  print(changed);
+  print('Result is $changed');
 }
-
+// dart bin/main.dart
 
 /// returns a Map that maps letters to other letters
 /// 13 places away in the English alphabet
